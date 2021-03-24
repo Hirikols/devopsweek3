@@ -1,0 +1,26 @@
+upstream backend {
+  server 192.168.0.104;
+}
+server{
+  listen 80;
+  server_name 192.168.0.104;
+  location /1 {
+    return https://medium.com;
+  }
+  location /2 {
+    return 302 "https://medium.com";
+  }
+  location /proxypass {
+    proxy_pass http://www.youtube.com/watch?v=G510jeWiaV0;
+  }
+  location /forbidden {
+    return 400 "?";
+  }
+  location /login {
+    auth_basic "admin";
+    auth_basic_user_file /etc/apache2/.htpasswd;
+  }
+  location /sus {
+    return 200 "success";
+  }
+}
